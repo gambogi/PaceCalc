@@ -1,6 +1,9 @@
 module Running.Distance (
           Distance(..)
         , Foot
+        , Yard
+        , Mile
+        , Marathon
         , Meter
         , addDist
         , subDist
@@ -72,9 +75,21 @@ newtype Mile = Mile Float
 instance Distance Mile where
     toMeters (Mile x)    = Meter(x*1609.34)
     fromMeters (Meter x) = Mile (x/1609.34)
+
 instance Show Mile where
     show (Mile x) = show x ++ "mi"
 
+--
+
+newtype Marathon = Marathon Float
+    deriving (Eq, Ord, Num)
+
+instance Distance Marathon where
+    toMeters  (Marathon x) = Meter   (x*42194.988)
+    fromMeters(Meter x)    = Marathon(x/42194.988)
+
+instance Show Marathon where
+    show (Marathon x) = show x ++ "marathon"
 
 -- | Metric Ascending
 
