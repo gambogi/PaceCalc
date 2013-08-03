@@ -62,7 +62,7 @@ newtype Yard = Yard Float
     deriving (Eq, Ord, Num)
 
 instance Distance Yard where
-    toMeters   (Yard x)  = Meter(x / 1.09361)
+    toMeters   (Yard x)  = Meter(x * (1/1.09361))
     fromMeters (Meter x) = Yard (x * 1.09361)
 instance Show Yard where
     show (Yard x) = show x ++ "yd"
@@ -74,7 +74,7 @@ newtype Mile = Mile Float
 
 instance Distance Mile where
     toMeters (Mile x)    = Meter(x*1609.34)
-    fromMeters (Meter x) = Mile (x/1609.34)
+    fromMeters (Meter x) = Mile (x*(1/1609.34))
 
 instance Show Mile where
     show (Mile x) = show x ++ "mi"
@@ -86,7 +86,7 @@ newtype Marathon = Marathon Float
 
 instance Distance Marathon where
     toMeters  (Marathon x) = Meter   (x*42194.988)
-    fromMeters(Meter x)    = Marathon(x/42194.988)
+    fromMeters(Meter x)    = Marathon(x*(1/42194.988))
 
 instance Show Marathon where
     show (Marathon x) = show x ++ "marathon"
