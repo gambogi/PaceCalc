@@ -18,9 +18,9 @@ import Data.Typeable(Typeable)
 
 class Distance d where
     -- | Converts the given unit of distance into meters
-    toMeters :: d -> Float
+    toMeters :: d -> Meter
     -- | Converts the given number of meters into the unit of measure
-    fromMeters :: Float -> d
+    fromMeters :: Meter -> d
 
 --------------------------------------------
 -- | Functions
@@ -44,24 +44,46 @@ convertDist = fromMeters . toMeters
 
 --
 newtype Foot = Foot Float
-    deriving (Eq, Data, Num,Ord,Real,Typeable)
+    deriving (Eq, Ord, Num)
 
 instance Distance Foot where
-    toMeters (Foot x) = x*0.3048
-    fromMeters x      = Foot (x * 3.28084)
+    toMeters   (Foot x)  = Meter(x / 3.28084) 
+    fromMeters (Meter x) = Foot (x * 3.28084)
 
 instance Show Foot where
     show (Foot x) = show x ++ "ft"
+
+--
+
+newtype Yard = Yard Float
+    deriving (Eq, Ord, Num)
+
+instance Distance Yard where
+    toMeters   (Yard x)  = Meter(x / 1.09361)
+    fromMeters (Meter x) = Yard (x * 1.09361)
+instance Show Yard where
+    show (Yard x) = show x ++ "yd"
+
+--
+
+newtype Mile = Mile Float
+    deriving (Eq, Ord, Num)
+
+instance Distance Mile where
+    toMeters (Mile x)    = Meter(x*1609.34)
+    fromMeters (Meter x) = Mile (x/1609.34)
+instance Show Mile where
+    show (Mile x) = show x ++ "mi"
 
 
 -- | Metric Ascending
 
 --
 newtype Meter = Meter Float
-    deriving (Eq, Data, Num,Ord,Real,Typeable)
+    deriving (Eq, Ord, Num)
 
 instance Distance Meter where
-    toMeters (Meter x) = x
-    fromMeters x       = x
+    toMeters x = x
+    fromMeters x = x
 instance Show Meter where
     show (Meter x) = show x ++ "m"
