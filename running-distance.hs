@@ -48,7 +48,7 @@ convertDist = fromMeters . toMeters
 
 --
 newtype Foot = Foot Float
-    deriving (Eq, Ord, Num)
+    deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Foot where
     toMeters   (Foot x)  = Meter(x / 3.28084) 
@@ -60,7 +60,7 @@ instance Show Foot where
 --
 
 newtype Yard = Yard Float
-    deriving (Eq, Ord, Num)
+    deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Yard where
     toMeters   (Yard x)  = Meter(x * (1/1.09361))
@@ -71,7 +71,7 @@ instance Show Yard where
 --
 
 newtype Mile = Mile Float
-    deriving (Eq, Ord, Num)
+    deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Mile where
     toMeters (Mile x)    = Meter(x*1609.34)
@@ -83,7 +83,7 @@ instance Show Mile where
 --
 
 newtype Marathon = Marathon Float
-    deriving (Eq, Ord, Num)
+    deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Marathon where
     toMeters  (Marathon x) = Meter   (x*42194.988)
@@ -96,7 +96,7 @@ instance Show Marathon where
 
 --
 newtype Meter = Meter Float
-    deriving (Eq, Ord, Num)
+    deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Meter where
     toMeters x = x
@@ -106,7 +106,7 @@ instance Show Meter where
 --
 
 newtype Kilometer = Kilometer Float
-    deriving (Eq, Ord, Num)
+    deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Kilometer where
     toMeters (Kilometer x) = Meter    (x*1000)
