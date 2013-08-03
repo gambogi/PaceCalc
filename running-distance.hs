@@ -5,6 +5,7 @@ module Running.Distance (
         , Mile
         , Marathon
         , Meter
+        , Kilometer
         , addDist
         , subDist
         , convertDist
@@ -102,3 +103,13 @@ instance Distance Meter where
     fromMeters x = x
 instance Show Meter where
     show (Meter x) = show x ++ "m"
+--
+
+newtype Kilometer = Kilometer Float
+    deriving (Eq, Ord, Num)
+
+instance Distance Kilometer where
+    toMeters (Kilometer x) = Meter    (x*1000)
+    fromMeters (Meter x)   = Kilometer(x*0.001)
+instance Show Kilometer where
+    show (Kilometer x) = show x ++ "km"
