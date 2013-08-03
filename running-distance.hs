@@ -41,6 +41,18 @@ subDist x y = fromMeters (toMeters x + toMeters y)
 convertDist :: (Distance a, Distance b) => a -> b
 convertDist = fromMeters . toMeters
 
+-- | Reads a string into a corresponding distance
+readDist :: (Float -> a) -> String ->
+            Int -> String ->
+            [(a, String)]
+readDist builder unitstr prec str = processItems builder (readsPrec prec str)
+    where processItems :: (Float -> a) -> [(Float,String)] -> [(a,String)]
+          processItems builder  [] = []
+          processItems builder ((a,s):rest)
+            | unitstr `isPrefixOf` s =
+                 (builder a, drop (length unitstr) s) : (processItems builder rest)
+            | otherwise              =
+               processItems builder rest
 --------------------------------------------
 -- | Unit Definitions
 
@@ -48,7 +60,7 @@ convertDist = fromMeters . toMeters
 
 --
 newtype Foot = Foot Float
-    deriving (Eq, Ord, Num, Fractional)
+    deriving (Eq, Ord, Num, Fractional, Typeable)
 
 instance Distance Foot where
     toMeters   (Foot x)  = Meter(x / 3.28084) 
@@ -57,21 +69,27 @@ instance Distance Foot where
 instance Show Foot where
     show (Foot x) = show x ++ "ft"
 
+instance Read Foot where
+    readsPrec = readDist Foot "ft"
 --
 
 newtype Yard = Yard Float
-    deriving (Eq, Ord, Num, Fractional)
+    deriving (Eq, Ord, Num, Fractional, Typeable)
 
 instance Distance Yard where
     toMeters   (Yard x)  = Meter(x * (1/1.09361))
     fromMeters (Meter x) = Yard (x * 1.09361)
+
 instance Show Yard where
     show (Yard x) = show x ++ "yd"
+
+instance Read Yard where
+    readsPrec = readDist Yard "yd"
 
 --
 
 newtype Mile = Mile Float
-    deriving (Eq, Ord, Num, Fractional)
+    deriving (Eq, Ord, Num, Fractional, Typeable)
 
 instance Distance Mile where
     toMeters (Mile x)    = Meter(x*1609.34)
@@ -80,10 +98,12 @@ instance Distance Mile where
 instance Show Mile where
     show (Mile x) = show x ++ "mi"
 
+instance Read Mile where
+    readsPrec = readDist Mile "mi"
 --
 
 newtype Marathon = Marathon Float
-    deriving (Eq, Ord, Num, Fractional)
+    deriving (Eq, Ord, Num, Fractional, Typeable)
 
 instance Distance Marathon where
     toMeters  (Marathon x) = Meter   (x*42194.988)
@@ -92,24 +112,35 @@ instance Distance Marathon where
 instance Show Marathon where
     show (Marathon x) = show x ++ "marathon"
 
+instance Read Marathon where
+    readsPrec = readDist Marathon "marathon"
+
 -- | Metric Ascending
 
 --
 newtype Meter = Meter Float
-    deriving (Eq, Ord, Num, Fractional)
+    deriving (Eq, Ord, Num, Fractional, Typeable)
 
 instance Distance Meter where
     toMeters x = x
     fromMeters x = x
+
 instance Show Meter where
     show (Meter x) = show x ++ "m"
+
+instance Read Meter where
+    readsPrec = readDist Meter "m"
 --
 
 newtype Kilometer = Kilometer Float
-    deriving (Eq, Ord, Num, Fractional)
+    deriving (Eq, Ord, Num, Fractional, Typeable)
 
 instance Distance Kilometer where
     toMeters (Kilometer x) = Meter    (x*1000)
     fromMeters (Meter x)   = Kilometer(x*0.001)
+
 instance Show Kilometer where
     show (Kilometer x) = show x ++ "km"
+
+instance Read Kilometer where
+    readsPrec = readDist Kilometer "km"
