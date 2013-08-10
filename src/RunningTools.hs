@@ -2,8 +2,6 @@ module RunningTools (
         )
     where
 import Data.Time.Clock
-import System.Time
-import System.Time.Utils
 import Data.String.Utils
 import RunningDistance
 
@@ -15,3 +13,4 @@ readTD t = secondsToDiffTime $ secs time
          secs [m,s]   = m*60 + s
          secs [s]      = s
 
+-- pace     :: DiffTime -> Distance -> String
