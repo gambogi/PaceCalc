@@ -24,13 +24,8 @@ class Distance d where
     toMeters :: d -> Meter
     -- | Converts the given number of meters into the unit of measure
     fromMeters :: Meter -> d
-
 --------------------------------------------
 -- | Functions
-
--- | Converts a distance to a float
-
-
 
 -- | Add two distances together to get a common distance
 addDist :: (Distance a, Distance b, Distance c) => a -> b -> c
@@ -56,6 +51,8 @@ readDist builder unitstr prec str = processItems builder (readsPrec prec str)
                  (builder a, drop (length unitstr) s) : (processItems builder rest)
             | otherwise              =
                processItems builder rest
+
+
 --------------------------------------------
 -- | Unit Definitions
 
@@ -74,6 +71,8 @@ instance Show Foot where
 
 instance Read Foot where
     readsPrec = readDist Foot "ft"
+
+
 --
 
 newtype Yard = Yard Float
