@@ -2,12 +2,17 @@ html {
    padding: 0;
    margin: 0;
    background-color: #ffffff;
-   font-family: Verdana, Helvetica, sans-serif;
+   font-family: Georgia, serif;
 }
 body {
    padding: 0;
    margin: 0;
 }
+
+h1 {
+    font-size: 50px;
+}
+
 a {
    text-decoration: underline;
 }
@@ -19,8 +24,12 @@ img {
    border: none;
 }
 #content {
-   padding-left: 1em;
+  text-align: center;
+  width: 600px;
+  margin: 0 auto;
+  padding-bottom: 30px;
 }
 #info {
    font-size: 60%;
 }
+
