@@ -104,19 +104,6 @@ instance Read Mile where
     readsPrec = readDist Mile "mi"
 --
 
-newtype Marathon = Marathon Float
-    deriving (Eq, Ord, Num, Fractional)
-
-instance Distance Marathon where
-    toMeters  (Marathon x) = Meter   (x*42194.988)
-    fromMeters(Meter x)    = Marathon(x*(1/42194.988))
-
-instance Show Marathon where
-    show (Marathon x) = show x ++ "marathon"
-
-instance Read Marathon where
-    readsPrec = readDist Marathon "marathon"
-
 -- | Metric Ascending
 
 --
@@ -146,3 +133,13 @@ instance Show Kilometer where
 
 instance Read Kilometer where
     readsPrec = readDist Kilometer "km"
+    
+-- | Common Distances
+
+--
+marathon         = 26.2 :: Mile
+half-marathon    = 13.1 :: Mile
+
+
+
+
