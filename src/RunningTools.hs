@@ -14,3 +14,8 @@ readTD t = secondsToDiffTime $ secs time
          secs [s]      = s
 
 -- pace     :: DiffTime -> Distance -> String
+
+-- | Calculates the number of laps to a given distance depending on the 
+--   size of the track
+--lapsTo :: (Distance a, Distance b) => a -> b -> c 
+lapsTo track dist = (toMeters dist)/(toMeters track)

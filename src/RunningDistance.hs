@@ -3,7 +3,6 @@ module RunningDistance (
         , Foot
         , Yard
         , Mile
-        , Marathon
         , Meter
         , Kilometer
         , addDist
@@ -43,6 +42,10 @@ subDist x y = fromMeters (toMeters x - toMeters y)
 -- | Convert one distance to another.
 convertDist :: (Distance a, Distance b) => a -> b
 convertDist = fromMeters . toMeters
+
+-- | Returns weather or not a distance qualifies as an ultra marathon
+-- ultraMarathon :: Distance a => a -> Bool
+
 
 -- | Reads a string into a corresponding distance
 readDist :: (Float -> a) -> String ->
@@ -138,8 +141,3 @@ instance Read Kilometer where
 
 --
 marathon         = 26.2 :: Mile
-half-marathon    = 13.1 :: Mile
-
-
-
-
