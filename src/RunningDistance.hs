@@ -8,6 +8,7 @@ module RunningDistance (
         , addDist
         , subDist
         , convertDist
+        , toFloat
         )
 where
 
@@ -20,16 +21,17 @@ import Data.List(isPrefixOf)
 
 class Distance d where
     -- | Converts the given unit of distance into meters
-    toMeters :: d -> Meter
+    toMeters   :: d -> Meter
     -- | Converts the given number of meters into the unit of measure
     fromMeters :: Meter -> d
-
+    -- | Yields the given distance as a float
+    toFloat    :: d -> Float
 --------------------------------------------
 -- | Functions
 
 -- | Converts a distance to a float
 
-
+--toFloat (Meter f) = f
 
 -- | Add two distances together to get a common distance
 addDist :: (Distance a, Distance b, Distance c) => a -> b -> c
@@ -71,7 +73,7 @@ newtype Foot = Foot Float
 instance Distance Foot where
     toMeters   (Foot x)  = Meter(x / 3.28084) 
     fromMeters (Meter x) = Foot (x * 3.28084)
-
+    toFloat    (Foot x)  = x
 instance Show Foot where
     show (Foot x) = show x ++ "ft"
 
@@ -85,7 +87,7 @@ newtype Yard = Yard Float
 instance Distance Yard where
     toMeters   (Yard x)  = Meter(x * (1/1.09361))
     fromMeters (Meter x) = Yard (x * 1.09361)
-
+    toFloat    (Yard x)  = x
 instance Show Yard where
     show (Yard x) = show x ++ "yd"
 
@@ -97,9 +99,9 @@ newtype Mile = Mile Float
     deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Mile where
-    toMeters (Mile x)    = Meter(x*1609.34)
+    toMeters   (Mile x)  = Meter(x*1609.34)
     fromMeters (Meter x) = Mile (x*(1/1609.34))
-
+    toFloat    (Mile x)  = x
 instance Show Mile where
     show (Mile x) = show x ++ "mi"
 
@@ -114,9 +116,9 @@ newtype Meter = Meter Float
     deriving (Eq, Ord, Num, Fractional)
 
 instance Distance Meter where
-    toMeters x = x
+    toMeters   x = x
     fromMeters x = x
-
+    toFloat (Meter x) = x
 instance Show Meter where
     show (Meter x) = show x ++ "m"
 
@@ -130,6 +132,7 @@ newtype Kilometer = Kilometer Float
 instance Distance Kilometer where
     toMeters (Kilometer x) = Meter    (x*1000)
     fromMeters (Meter x)   = Kilometer(x*0.001)
+    toFloat (Kilometer x)  = x
 
 instance Show Kilometer where
     show (Kilometer x) = show x ++ "km"
@@ -141,3 +144,6 @@ instance Read Kilometer where
 
 --
 marathon         = 26.2 :: Mile
+outdoorTrack     = 400  :: Meter
+indoorTrack      = 200  :: Meter
+englishTrack     = 440  :: Yard
